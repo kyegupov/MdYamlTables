@@ -40,7 +40,6 @@ data:
 
   def main(args: Array[String]) {
     val processor = new PegDownProcessor()
-    processor.parseMarkdown("foo".toCharArray)
 
     val table = YamlTables.renderTable(YamlTables.parseYamlAsMap(text), o => processor.markdownToHtml(o.toString))
 

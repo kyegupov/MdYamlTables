@@ -80,8 +80,14 @@ object YamlTables {
     if (row.containsKey(colSpec.id)) {
       val cellSpec = row(colSpec.id)
 
+      val attributes = new mutable.StringBuilder()
       val align = cellSpec.align.orElse(colSpec.align)
-      val attributes = s" align=${align.getOrElse("")} rowspan=$rowSpan"
+      if (align.isDefined) {
+        attributes.append(" align=\"" + align.get + "\"") // see SI-6476
+      }
+      if (rowSpan != 1) {
+        attributes.append(s" rowspan=$rowSpan")
+      }
       s"<td$attributes>${renderer(cellSpec.content)}</td>"
     } else {
       "<td></td>"
